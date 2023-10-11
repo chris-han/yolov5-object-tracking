@@ -1,5 +1,6 @@
 import streamlit as st
 from obj_det_and_trk_streamlit import *
+import argparse
 
 #--------------------------------Web Page Designing------------------------------
 hide_menu_style = """
@@ -90,9 +91,18 @@ def main():
         nosave = True
         display_labels = True 
            
-    weights = "yolov5n.pt"
-    device="cpu"
+    # weights = "yolov5n.pt"
+    weights = "four_class_1-17.pt"
+    
+    # read the device from the command line argument --device defaults to CPU if no argument was passed
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--device', default='cpu', help='Device to use for inference')
+    args = parser.parse_args()
 
+    device = args.device
+    print("device: ", device)
+    
+    
     # ------------------------- LOCAL VIDEO ------------------------
     if input_source == "Video":
         
@@ -127,7 +137,7 @@ def main():
                    kpi5_text=kpi5_text,
                    kpi6_text = kpi6_text,
                    conf_thres=float(conf_thres),
-                   device="cpu",
+                   device=device,
                     classes=0,nosave=nosave, 
                     display_labels=display_labels)
 
@@ -165,7 +175,7 @@ def main():
                    kpi5_text=kpi5_text,
                    kpi6_text = kpi6_text,
                    conf_thres=float(conf_thres),
-                   device="cpu",
+                   device=device,
                     classes=0,nosave=nosave, 
                     display_labels=display_labels)
 
